@@ -10,7 +10,7 @@ def read_input(file: Path) -> list[str]:
 
 def symbols_in_line(line: str) -> tuple[int]:
     """Get the symbol indices in a line that are not . or \d"""
-    pattern = re.compile(r"[*]")
+    pattern = re.compile(r"[^.\d]")
     return _get_all_matches(line, pattern)
 
 
@@ -30,11 +30,10 @@ def _get_all_matches(line: str, pattern: re.Pattern) -> list[re.Match]:
 
 
 def find_matching_numbers(
-    symbols: list[tuple[int]], numbers: list[tuple[int, int]]
-) -> list[tuple[int, int]]:
+    symbols: list[list[re.Match]], numbers: list[list[re.Match]]
+) -> list[int]:
     """Find matching numbers that are adjacent to valid symbols and append them
     to a list"""
-    # FIXME: need to restructure comparison to multiply matches
     matches = []
     prev_s_line = []
     prev_n_line = []
@@ -47,7 +46,7 @@ def find_matching_numbers(
     return matches
 
 
-def compare_line(s_line: list[int], n_line: list[re.Match]) -> list[int]:
+def compare_line(s_line: list[re.Match], n_line: list[re.Match]) -> list[int]:
     """Compare a symbol line and a number line to determine if any numbers are
     adjacent"""
     matches = []

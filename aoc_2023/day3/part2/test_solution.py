@@ -2,10 +2,11 @@ from dataclasses import dataclass
 
 import pytest
 
-from aoc_2023.day3.part1.solution import (
-    compare_line,
+from aoc_2023.day3.part2.solution import (
+    compare_sym,
     main,
     numbers_in_line,
+    prod_match_sets,
     symbols_in_line,
 )
 
@@ -38,6 +39,25 @@ def example_input():
     ]
 
 
+def example_input1():
+    return [
+        "467..114..",
+        "...*......",
+        "..35..633.",
+        "......#...",
+        "617*......",
+        ".....+.58.",
+        "..592.....",
+        "......755.",
+        "...$.*....",
+        ".664.598..",
+    ]
+
+
+def expected_result1():
+    return sum([467 * 35, 755 * 598])
+
+
 @pytest.fixture
 def expected_symbol_locs():
     return [
@@ -68,6 +88,18 @@ def expected_number_locs():
         [],
         [ProxyMatch((1, 4), "664"), ProxyMatch((5, 8), "598")],
     ]
+
+
+def example_input2():
+    return [
+        ".........426.............985.........40..........207............................841..463................................633........17.384...",
+        "531&......+..........125....-..312..........#........895......998..945.....@......$.....-...33...................353.....*........*.........",
+        "........................#......*...........21..727..*..../..-./.............545......80...................602......@..272.......743.........",
+    ]
+
+
+def expected_result2():
+    return sum([633 * 272, 17 * 743])
 
 
 def example_line_1():
@@ -123,11 +155,7 @@ def example_line_4():
 
 
 def expected_sym_4():
-    return [
-        ProxyMatch((0, 1), ""),
-        ProxyMatch((1, 2), ""),
-        ProxyMatch((2, 3), ""),
-    ]
+    return []
 
 
 @pytest.mark.parametrize(
@@ -186,16 +214,35 @@ def test_symbols_in_example(example_input, expected_symbol_locs):
     [
         (expected_sym_1(), expected_num_1(), expected_compare_1()),
         (expected_sym_2(), expected_num_2(), expected_compare_2()),
-        (expected_sym_3(), expected_num_3(), expected_compare_3()),
     ],
 )
 def test_compare_line(sym, num, expected):
-    result = compare_line(sym, num)
+    result = compare_sym(sym[0], num)
     for r_num, e_num in zip(result, expected):
         assert r_num == e_num, "failed compare"
 
 
-def test_main(example_input):
-    expected_sum = 467835
+@pytest.mark.parametrize(
+    ["match_set", "expected"],
+    [
+        ([5, 2], 10),
+        ([6, 2, 3], 36),
+        ([300], 0),
+        ([], 0),
+    ],
+)
+def test_prod_match_sets(match_set, expected):
+    result = prod_match_sets(match_set)
+    assert result == expected, "Failed product"
+
+
+@pytest.mark.parametrize(
+    ["example_input", "expected"],
+    [
+        (example_input1(), expected_result1()),
+        (example_input2(), expected_result2()),
+    ],
+)
+def test_main(example_input, expected):
     result = main(example_input)
-    assert sum(result) == expected_sum, "Failed main"
+    assert sum(result) == expected, "Failed main"
