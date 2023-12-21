@@ -1,6 +1,6 @@
 import pytest
 
-from aoc_2023.day4.part1.solution import main, score_matches
+from aoc_2023.day4.part2.solution import count_cards, main, score_matches
 
 
 @pytest.fixture
@@ -53,7 +53,18 @@ def expected_matches():
 
 @pytest.fixture
 def expected_scores():
-    return "RESET"
+    return [4, 2, 2, 1, 0, 0]
+
+
+@pytest.fixture
+def expected_n_cards():
+    return [1, 2, 4, 8, 14, 1]
+
+
+def test_count_cards(expected_scores, expected_n_cards):
+    result = count_cards(expected_scores)
+    for r, e in zip(result, expected_n_cards):
+        assert r == e
 
 
 def test_score_matches(expected_matches, expected_scores):
@@ -63,6 +74,7 @@ def test_score_matches(expected_matches, expected_scores):
 
 
 def test_main(example_input):
+    # expected = sum(l := [1 * 4, 2 * 2, 4 * 2, 8 * 1, 14 * 0, 0]) + len(l)
     expected = 30
     result = main(example_input)
     assert sum(result) == expected
