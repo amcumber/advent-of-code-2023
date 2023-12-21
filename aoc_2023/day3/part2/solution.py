@@ -1,4 +1,5 @@
 import re
+from functools import reduce
 from pathlib import Path
 
 
@@ -8,15 +9,15 @@ def read_input(file: Path) -> list[str]:
         return [line.strip() for line in fh.readlines()]
 
 
-def symbols_in_line(line: str) -> tuple[int]:
-    """Get the symbol indices in a line that are not . or \d"""
-    pattern = re.compile(r"[^.\d]")
+def symbols_in_line(line: str) -> tuple[re.Match]:
+    """Get the symbol indices in a line that are not . or digit"""
+    pattern = re.compile(r"[*]")
     return _get_all_matches(line, pattern)
 
 
 def numbers_in_line(line: str) -> list[re.Match]:
-    """Get the symbol indices in a line that are not . or \d"""
-    pattern = re.compile(r"[\d]+")
+    """Get the symbol indices in a line that are not . or digit"""
+    pattern = re.compile(r"\d+")
     return _get_all_matches(line, pattern)
 
 
@@ -29,34 +30,66 @@ def _get_all_matches(line: str, pattern: re.Pattern) -> list[re.Match]:
     return symbols
 
 
-def find_matching_numbers(
-    symbols: list[tuple[int]], numbers: list[tuple[int, int]]
-) -> list[tuple[int, int]]:
+def match_numbers_to_symbols(
+    symbols: list[list[re.Match]], numbers: list[list[re.Match]]
+) -> list[list[int]]:
     """Find matching numbers that are adjacent to valid symbols and append them
-    to a list"""
+    to a nested list"""
     matches = []
-    prev_s_line = []
     prev_n_line = []
-    for s_line, n_line in zip(symbols, numbers):
-        matches.extend(compare_line(s_line, prev_n_line))
-        matches.extend(compare_line(s_line, n_line))
-        matches.extend(compare_line(prev_s_line, n_line))
-        prev_s_line = s_line
+    s_line = []
+    n_line = []
+    for next_s_line, next_n_line in zip(symbols, numbers):
+        matches.extend(
+            compare_lines(
+                s_line,
+                [
+                    prev_n_line,
+                    n_line,
+                    next_n_line,
+                ],
+            )
+        )
+
         prev_n_line = n_line
+        s_line = next_s_line
+        n_line = next_n_line
+
+    # Last line
+    matches.extend(compare_lines(s_line, [prev_n_line, n_line]))
+
     return matches
 
 
-def compare_line(s_line: list[int], n_line: list[re.Match]) -> list[int]:
+def compare_lines(s_line: list[re.Match], n_lines: list[list[re.Match]]) -> list[int]:
+    matches = []
+    for sym in s_line:
+        adj_sym = []
+        for n_line in n_lines:
+            adj_sym.extend(compare_sym(sym, n_line))
+        matches.append(adj_sym)
+    return matches
+
+
+def compare_sym(sym: re.Match, n_line: list[re.Match]) -> list[int]:
     """Compare a symbol line and a number line to determine if any numbers are
     adjacent"""
     matches = []
+    sym_idx, _ = sym.span()
+
     for num in n_line:
         num_start, num_end = num.span()
-        for sym in s_line:
-            sym_idx, _ = sym.span()
-            if num_start - 1 <= sym_idx and num_end >= sym_idx:
-                matches.append(int(num.group()))
+
+        if num_start - 1 <= sym_idx and num_end >= sym_idx:
+            matches.append(int(num.group()))
     return matches
+
+
+def prod_match_sets(match_set: list[int]) -> int:
+    """Calculate the product of a match set, returning 0 if list len is 0 or 1"""
+    if len(match_set) < 2:
+        return 0
+    return reduce(lambda x, y: x * y, match_set)
 
 
 def main(input_data: list[str]):
@@ -64,7 +97,8 @@ def main(input_data: list[str]):
 
     symbols = [symbols_in_line(line) for line in input_data]
     numbers = [numbers_in_line(line) for line in input_data]
-    return find_matching_numbers(symbols, numbers)
+    matches = match_numbers_to_symbols(symbols, numbers)
+    return [prod_match_sets(match_set) for match_set in matches]
 
 
 if __name__ == "__main__":
