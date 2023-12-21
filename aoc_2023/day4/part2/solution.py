@@ -26,10 +26,19 @@ def get_matches(card, winners) -> list[int]:
 
 
 def score_matches(matches: list[int]) -> int:
-    n = len(matches)
-    if n > 0:
-        return 2 ** (n - 1)
-    return 0
+    return len(matches)
+
+
+def count_cards(scores: list[int]):
+    counts = [1] * len(scores)
+    for card_id, score in enumerate(scores):
+        n_cards = counts[card_id]
+        for idx in range(1, score + 1):
+            if (count_id := card_id + idx) < len(counts):
+                counts[count_id] += n_cards
+            else:
+                counts.append(n_cards)
+    return counts
 
 
 def main(input_data: list[str]):
@@ -39,8 +48,8 @@ def main(input_data: list[str]):
         get_matches(card, winning_nums)
         for card, winning_nums in zip(cards, winning_cards)
     ]
-
-    return [score_matches(matches) for matches in all_matches]
+    individual_scores = [score_matches(matches) for matches in all_matches]
+    return count_cards(individual_scores)
 
 
 if __name__ == "__main__":
