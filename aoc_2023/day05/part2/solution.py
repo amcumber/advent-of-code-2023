@@ -2,11 +2,12 @@
 import re
 import sys
 from pathlib import Path
+from typing import Iterable
 
 sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
-from aoc_2023.day05.day5 import get_maps, get_seeds, walk_almanac
+from aoc_2023.day05.day5 import get_maps, get_seeds, walk_almanac, SparseMap
 
 ALMANAC = {
     "seed": "soil",
@@ -20,7 +21,9 @@ ALMANAC = {
 START_NAME = "seed"
 
 
-def get_paths(seeds, maps):
+def get_paths(
+    seeds: Iterable[int], maps: list[str, SparseMap]
+) -> dict[int, dict[str, int]]:
     paths = {}
     for seed in seeds:
         path, _ = walk_almanac(ALMANAC, seed, maps, start_name=START_NAME)
@@ -37,17 +40,20 @@ def find_min_loc(paths: dict[int, list[int]]):
     return min_loc, loc2seed[min_loc]
 
 
-def get_seed_ranges(seeds):
-    for double_idx, seed in enumerate(seeds[::2]):
-        # TODO
-        ...
+def parse_seeds(seeds: list[int]) -> list[range]:
+    seed_ranges = []
+    for idx2, start in enumerate(seeds[::2]):
+        s_range = seeds[2 * idx2 + 1]
+        seed_ranges.append(range(start, start + s_range))
+    return seed_ranges
 
 
 def main(input_data: list[str]):
     """Run solution"""
     seeds = get_seeds(input_data)
+    seed_ranges = parse_seeds(seeds)
     maps = get_maps(input_data)
-    paths = get_paths(seeds, maps)
+    paths = get_paths(seed_ranges, maps)
     min_loc, min_seed = find_min_loc(paths)
     return min_loc, min_seed, paths
 
