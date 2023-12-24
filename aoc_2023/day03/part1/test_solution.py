@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from aoc_2023.day3.part1.solution import (
+from aoc_2023.day03.part1.solution import (
     compare_line,
     main,
     numbers_in_line,

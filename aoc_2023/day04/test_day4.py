@@ -1,6 +1,6 @@
 import pytest
 
-from aoc_2023.day4.day4 import get_matches, parse_input
+from aoc_2023.day04.day4 import get_matches, parse_input
 
 
 @pytest.fixture

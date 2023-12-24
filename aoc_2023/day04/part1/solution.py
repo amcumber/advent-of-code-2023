@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
-from aoc_2023.day4.day4 import get_matches, parse_input
+from aoc_2023.day04.day4 import get_matches, parse_input
 
 
 def score_matches(matches: list[int]) -> int:
