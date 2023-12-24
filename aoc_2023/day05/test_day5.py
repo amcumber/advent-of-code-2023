@@ -1,6 +1,6 @@
 import pytest
 
-from aoc_2023.day5.day5 import get_maps, get_seeds
+from aoc_2023.day05.day5 import get_maps, get_seeds
 
 
 @pytest.fixture

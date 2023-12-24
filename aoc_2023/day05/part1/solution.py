@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
-from aoc_2023.day5.day5 import get_maps, get_seeds, walk_almanac
+from aoc_2023.day05.day5 import get_maps, get_seeds, walk_almanac, SparseMap
 
 ALMANAC = {
     "seed": "soil",
@@ -19,7 +19,9 @@ ALMANAC = {
 START_NAME = "seed"
 
 
-def get_paths(seeds, maps):
+def get_paths(
+    seeds: list[int], maps: dict[str, SparseMap]
+) -> dict[int, dict[str, int]]:
     paths = {}
     for seed in seeds:
         path, _ = walk_almanac(ALMANAC, seed, maps, start_name=START_NAME)
@@ -28,7 +30,7 @@ def get_paths(seeds, maps):
     return paths
 
 
-def find_min_loc(paths: dict[int, list[int]]):
+def find_min_loc(paths: dict[int, list[int]]) -> tuple[int, int]:
     loc2seed = {}
     for seed, path in paths.items():
         loc2seed[path[-1]] = seed

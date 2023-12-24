@@ -26,7 +26,10 @@ class SparseMap:
 
 
 def walk_almanac(
-    almanac: dict[str, str], start: int, maps: dict[dict[int, int]], start_name="seed"
+    almanac: dict[str, str],
+    start: int,
+    maps: dict[str, SparseMap],
+    start_name="seed",
 ) -> tuple[list[int], list[str]]:
     this_key = start_name
     val = start
@@ -54,7 +57,7 @@ def _parse_str_arr(array: str) -> list[int]:
     return [int(ele) for ele in m.split(array.strip())]
 
 
-def get_seeds(lines: list[str]):
+def get_seeds(lines: list[str]) -> list[int]:
     pattern = r"seeds:"
     m = re.compile(pattern)
     for line in lines:
