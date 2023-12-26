@@ -1,6 +1,6 @@
 import pytest
 
-from aoc_2023.day4.part1.solution import main, score_matches
+from aoc_2023.day04.part1.solution import main, score_matches
 
 
 @pytest.fixture
