@@ -1,15 +1,15 @@
 import pytest
-from aoc_2023.day05.day5 import get_maps
 
+from aoc_2023.day05.day5 import get_maps
 from aoc_2023.day05.part2.solution_d5p2 import (
-    get_link_names,
-    main,
-    parse_seeds,
-    get_seed2loc,
-    get_reversed_maps,
-    get_loc2seed,
     ALMANAC,
     REV_ALMANAC,
+    _get_reversed_maps,
+    get_link_names,
+    get_loc2seed,
+    get_seed2loc,
+    main,
+    parse_seeds,
 )
 
 
@@ -135,7 +135,7 @@ def test_get_seed2loc(loc_and_seed, example_input):
 
 def test_get_loc2seed(loc_and_seed, example_input):
     maps = get_maps(example_input)
-    rev_maps = get_reversed_maps(maps)
+    rev_maps = _get_reversed_maps(maps)
     for loc, seed in loc_and_seed:
         expected = seed
         result = get_loc2seed(loc, rev_maps)
