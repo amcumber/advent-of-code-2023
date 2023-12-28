@@ -1,8 +1,9 @@
 """Solution to part 1 day 5"""
-import sys
-from pathlib import Path
+if __name__ == "__main__":
+    import sys
+    from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
+    sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
 from aoc_2023.day05.day5 import get_maps, get_seeds, walk_almanac, SparseMap
