@@ -77,8 +77,28 @@ def walk_almanac(
     almanac: dict[str, str],
     start: int,
     maps: dict[str, SparseMap],
-    start_name="seed",
+    start_name: str = "seed",
 ) -> tuple[list[int], list[str]]:
+    """Walk almanac from start_name to end based on almanac and maps data
+
+    Parameters
+    ----------
+    almanac: dict[str, str]
+        1-1 name connections to generate keys in maps( e.g. {'seed': 'soil'})
+    start: int
+        start value
+    maps: dict[str, SparseMap]
+        maps data with keys x-to-y (e.g. seed-to-soil)
+    start_name : str
+        start name to start walking maps, default is 'seed'
+
+    Returns
+    -------
+    key_path : list[int]
+        values
+    name_path : list[str]
+        names
+    """
     this_key = start_name
     val = start
     key_path = [start]
@@ -100,7 +120,7 @@ def _get_map_name(key, val):
     return f"{key}-to-{val}"
 
 
-def populate_almanac_path(
+def populate_almanac_links(
     almanac: dict[str, str],
     start_name: str,
 ) -> list[str]:
@@ -147,7 +167,7 @@ def get_maps(lines: list[str]) -> dict[str, SparseMap]:
             map_info = []
             map_name = ""
         elif map_flag:
-            map_info.append(tuple(_parse_str_arr(line)))
+            map_info.append(AlmanacEntry(*_parse_str_arr(line)))
 
         elif m.search(line):
             map_flag = True

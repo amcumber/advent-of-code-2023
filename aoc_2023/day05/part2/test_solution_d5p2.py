@@ -2,11 +2,11 @@ import pytest
 from aoc_2023.day05.day5 import get_maps
 
 from aoc_2023.day05.part2.solution_d5p2 import (
-    get_path_names,
+    get_link_names,
     main,
     parse_seeds,
     get_seed2loc,
-    reverse_maps,
+    get_reversed_maps,
     get_loc2seed,
     ALMANAC,
     REV_ALMANAC,
@@ -54,7 +54,7 @@ def example_input():
 
 @pytest.fixture
 def loc_and_seed():
-    return [(81, 79), (57, 55)]
+    return [(82, 79), (86, 55)]
 
 
 @pytest.fixture
@@ -121,7 +121,7 @@ def test_rev_almanac():
     ],
 )
 def test_path_names(is_reversed, expected):
-    result = get_path_names(is_reversed)
+    result = get_link_names(is_reversed)
     assert all([e in result for e in expected])
 
 
@@ -133,9 +133,9 @@ def test_get_seed2loc(loc_and_seed, example_input):
         assert result == expected
 
 
-def test_get_loc2seed(loc_and_seed):
+def test_get_loc2seed(loc_and_seed, example_input):
     maps = get_maps(example_input)
-    rev_maps = reverse_maps(maps)
+    rev_maps = get_reversed_maps(maps)
     for loc, seed in loc_and_seed:
         expected = seed
         result = get_loc2seed(loc, rev_maps)
