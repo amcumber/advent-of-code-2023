@@ -54,21 +54,25 @@ class SparseMap:
         """Return a SparseMap with source and dest reversed"""
         return self.__class__([entry.reverse() for entry in self.map_info])
 
-    def min(self) -> list[tuple[int, int]]:
-        return [(dest, source) for dest, source, _ in self.map_info]
+    def min(self) -> list[DestSourceTuple]:
+        """Return a named tuple with with minimum sources and destinations"""
+        return [DestSourceTuple(dest, source) for dest, source, _ in self.map_info]
 
-    def max(self) -> list[tuple[int, int]]:
+    def max(self) -> list[DestSourceTuple]:
+        """Return a named tuple with with maximum sources and destinations"""
         return [
-            (dest + rng - 1, source + rng - 1) for dest, source, rng in self.map_info
+            DestSourceTuple(dest + rng - 1, source + rng - 1)
+            for dest, source, rng in self.map_info
         ]
 
-    def get_nodes(self) -> list[tuple[int, int]]:
+    def get_nodes(self) -> list[DestSourceTuple]:
+        """Get edges of the specified mapping ranges in map"""
         nodes = []
         nodes.extend(mins := self.min())
         nodes.extend(maxes := self.max())
         for (mini_d, mini_s), (maxi_d, maxi_s) in zip(mins, maxes):
-            nodes.append((mini_d - 1, mini_s - 1))
-            nodes.append((maxi_d + 1, maxi_s + 1))
+            nodes.append(DestSourceTuple(mini_d - 1, mini_s - 1))
+            nodes.append(DestSourceTuple(maxi_d + 1, maxi_s + 1))
         nodes.sort(key=lambda x: x[0])
         return nodes
 
