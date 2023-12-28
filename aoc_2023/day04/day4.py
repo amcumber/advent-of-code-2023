@@ -1,10 +1,4 @@
 import re
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
-
-from aoc_2023.core import read_input
 
 
 def _parse_line(line: str) -> list[list[int]]:

@@ -32,17 +32,18 @@ class Match:
             return False
         return True
 
+
 def _parse_line(line: str) -> list[list[int]]:
     vals = line.split(":")[1].strip()
     return tuple(_parse_str_arr(arr) for arr in (winner_str, card_str))
 
+
 def _parse_times(input_data: Iterable[str]) -> list[int]:
-    pattern = 'Times :'
+    pattern = "Times :"
 
     _parse_line(pattern)
     for line in input_data:
-        
-        
+        ...
 
 
 def _parse_dists(input_data: Iterable[str]) -> list[int]:

@@ -3,7 +3,6 @@ import pytest
 from aoc_2023.day05.day5 import get_maps, get_seeds
 
 
-@pytest.fixture
 def example_input():
     return [
         "seeds: 79 14 55 13",
@@ -55,13 +54,13 @@ def expected_seed2soil_sample():
     }
 
 
-def test_get_seeds(example_input, expected_seeds):
-    results = get_seeds(example_input)
+def test_get_seeds(expected_seeds):
+    results = get_seeds(example_input())
     assert results == expected_seeds
 
 
-def test_seed2soil_map(example_input, expected_seed2soil_sample):
-    maps = get_maps(example_input)
+def test_seed2soil_map(expected_seed2soil_sample):
+    maps = get_maps(example_input())
     results = maps["seed-to-soil"]
     for key, expected in expected_seed2soil_sample.items():
         r = results.get(key, key)
@@ -77,8 +76,8 @@ def test_seed2soil_map(example_input, expected_seed2soil_sample):
         (13, 13),
     ],
 )
-def test_seed2soil_inputs(example_input, seed, soil):
-    maps = get_maps(example_input)
+def test_seed2soil_inputs(seed, soil):
+    maps = get_maps(example_input())
     results = maps["seed-to-soil"]
     result = results.get(seed, seed)
     assert result == soil
@@ -93,8 +92,8 @@ def test_seed2soil_inputs(example_input, seed, soil):
         (13, 52),
     ],
 )
-def test_soil2fertilizer_inputs(example_input, soil, fertilizer):
-    maps = get_maps(example_input)
+def test_soil2fertilizer_inputs(soil, fertilizer):
+    maps = get_maps(example_input())
     results = maps["soil-to-fertilizer"]
     result = results.get(soil, soil)
     assert result == fertilizer
@@ -109,8 +108,8 @@ def test_soil2fertilizer_inputs(example_input, soil, fertilizer):
         (52, 41),
     ],
 )
-def test_fert2water_inputs(example_input, fertilizer, water):
-    maps = get_maps(example_input)
+def test_fert2water_inputs(fertilizer, water):
+    maps = get_maps(example_input())
     results = maps["fertilizer-to-water"]
     result = results.get(fertilizer, fertilizer)
     assert result == water
@@ -125,8 +124,8 @@ def test_fert2water_inputs(example_input, fertilizer, water):
         (41, 34),
     ],
 )
-def test_water2light_inputs(example_input, water, light):
-    maps = get_maps(example_input)
+def test_water2light_inputs(water, light):
+    maps = get_maps(example_input())
     results = maps["water-to-light"]
     result = results.get(water, water)
     assert result == light
@@ -141,8 +140,8 @@ def test_water2light_inputs(example_input, water, light):
         (34, 34),
     ],
 )
-def test_light2temp_inputs(example_input, light, temperature):
-    maps = get_maps(example_input)
+def test_light2temp_inputs(light, temperature):
+    maps = get_maps(example_input())
     results = maps["light-to-temperature"]
     result = results.get(light, light)
     assert result == temperature
@@ -157,8 +156,8 @@ def test_light2temp_inputs(example_input, light, temperature):
         (34, 35),
     ],
 )
-def test_temp2humid_inputs(example_input, temperature, humidity):
-    maps = get_maps(example_input)
+def test_temp2humid_inputs(temperature, humidity):
+    maps = get_maps(example_input())
     results = maps["temperature-to-humidity"]
     result = results.get(temperature, temperature)
     assert result == humidity
@@ -173,8 +172,8 @@ def test_temp2humid_inputs(example_input, temperature, humidity):
         (35, 35),
     ],
 )
-def test_humid2loc_inputs(example_input, humidity, location):
-    maps = get_maps(example_input)
+def test_humid2loc_inputs(humidity, location):
+    maps = get_maps(example_input())
     results = maps["humidity-to-location"]
     result = results.get(humidity, humidity)
     assert result == location

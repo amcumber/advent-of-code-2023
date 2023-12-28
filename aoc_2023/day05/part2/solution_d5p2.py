@@ -1,13 +1,18 @@
 """solution for part 2 day 5"""
-import re
 import sys
 from pathlib import Path
-from typing import Iterable
+from typing import Any, Generic, Iterable
 
 sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
-from aoc_2023.day05.day5 import get_maps, get_seeds, walk_almanac, SparseMap
+from aoc_2023.day05.day5 import (
+    get_maps,
+    get_seeds,
+    populate_almanac_path,
+    walk_almanac,
+    SparseMap,
+)
 
 ALMANAC = {
     "seed": "soil",
@@ -19,6 +24,45 @@ ALMANAC = {
     "humidity": "location",
 }
 START_NAME = "seed"
+REV_NAME = "location"
+
+Key = Any
+Value = Any
+REV_ALMANAC = {v: k for k, v in ALMANAC.items()}
+
+
+def reverse_maps(maps: dict[str, SparseMap]) -> dict[str, SparseMap]:
+    """Reverse maps dictionary"""
+    new_maps = {}
+    for key, map_ in maps.items():
+        a, to_, b = key.split("-")
+        new_key = "-".join((b, to_, a))
+        new_maps[new_key] = map_.reverse()
+    return new_maps
+
+
+def get_seed2loc(seed: int, maps: dict[str, SparseMap]):
+    """Get a location based on seed num"""
+    path, _ = walk_almanac(ALMANAC, seed, maps, start_name=START_NAME)
+    return path[-1]
+
+
+def get_loc2seed(loc: int, reversed_maps: dict[str, SparseMap]):
+    """Walk a location to seed using a reversed_maps dict"""
+    path, _ = walk_almanac(REV_ALMANAC, loc, reversed_maps, start_name=REV_NAME)
+    return path[-1]
+
+
+def get_path_names(is_reversed=False) -> list[str]:
+    """Walk a location to seed using a reversed_maps dict"""
+    if is_reversed:
+        return populate_almanac_path(REV_ALMANAC, REV_NAME)
+
+    return populate_almanac_path(ALMANAC, START_NAME)
+
+
+def map_node_edges(maps: dict[str, SparseMap]) -> dict[str, list[tuple[int, int]]]:
+    """For each end of the reversed_map"""
 
 
 def get_paths(

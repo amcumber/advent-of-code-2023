@@ -1,15 +1,17 @@
 """Prototype for part 2 day 5"""
-import sys
-from pathlib import Path
 from typing import Iterable
 
 import matplotlib.pyplot as plt
 
-sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
+if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.day05.day5 import SparseMap, get_maps, get_seeds
 
-from aoc_2023.day05.part2.solution import parse_seeds, get_paths
+from aoc_2023.day05.part2.solution_d5p2 import parse_seeds, get_paths
 
 
 def input_tbr():
@@ -58,10 +60,10 @@ def visualize(
     y = []
     for s_range in seed_ranges:
         paths = get_paths(s_range, maps)
-        x.extend(list(paths.key()))
-        y.extend([path["location"] for path in paths.values()])
+        x.extend(list(paths.keys()))
+        y.extend([path[-1] for path in paths.values()])
     fig, ax = plt.subplots(1, 1)
-    ax.plot(x, y)
+    ax.plot(x, y, "k+")
     return fig, ax
 
 

@@ -1,7 +1,33 @@
 import re
 from dataclasses import dataclass
+from typing import Any, NamedTuple
 
-AlmanacEntry = tuple[int, int, int]
+AlmanacEntryType = tuple[int, int, int]
+DestSourceTupleType = tuple[int, int]
+SparseMapType = Any
+
+
+class AlmanacEntry(NamedTuple):
+    dest: int
+    source: int
+    rng: int
+
+    def reverse(self) -> AlmanacEntryType:
+        return self.__class__(self.source, self.dest, self.rng)
+
+    def __add__(self, value: int, /):
+        return self.__class__(self.source + value, self.dest + value, self.rng)
+
+    def __sub__(self, value: int, /):
+        return self.__class__(self.source - value, self.dest - value, self.rng)
+
+
+class DestSourceTuple(NamedTuple):
+    dest: int
+    source: int
+
+    def reverse(self) -> DestSourceTupleType:
+        return self.__class__(self.source, self.dest)
 
 
 @dataclass
@@ -23,6 +49,28 @@ class SparseMap:
         dest, source, _ = self.map_info[loc]
         idx = key - source
         return dest + idx
+
+    def reverse(self) -> SparseMapType:
+        """Return a SparseMap with source and dest reversed"""
+        return self.__class__([entry.reverse() for entry in self.map_info])
+
+    def min(self) -> list[tuple[int, int]]:
+        return [(dest, source) for dest, source, _ in self.map_info]
+
+    def max(self) -> list[tuple[int, int]]:
+        return [
+            (dest + rng - 1, source + rng - 1) for dest, source, rng in self.map_info
+        ]
+
+    def get_nodes(self) -> list[tuple[int, int]]:
+        nodes = []
+        nodes.extend(mins := self.min())
+        nodes.extend(maxes := self.max())
+        for (mini_d, mini_s), (maxi_d, maxi_s) in zip(mins, maxes):
+            nodes.append((mini_d - 1, mini_s - 1))
+            nodes.append((maxi_d + 1, maxi_s + 1))
+        nodes.sort(key=lambda x: x[0])
+        return nodes
 
 
 def walk_almanac(
@@ -50,6 +98,23 @@ def walk_almanac(
 
 def _get_map_name(key, val):
     return f"{key}-to-{val}"
+
+
+def populate_almanac_path(
+    almanac: dict[str, str],
+    start_name: str,
+) -> list[str]:
+    """Populate a sequence of map keys that will walk the provided almanac"""
+    name_path = []
+    this_key = start_name
+    while True:
+        next_key = almanac.get(this_key, this_key)
+        map_name = _get_map_name(this_key, next_key)
+        if next_key == this_key:
+            break
+        name_path.append(map_name)
+        this_key = next_key
+    return name_path
 
 
 def _parse_str_arr(array: str) -> list[int]:
