@@ -3,7 +3,7 @@ import sys
 from collections import namedtuple
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, NamedTuple
+from typing import Any
 
 if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
