@@ -2,6 +2,14 @@ from pathlib import Path
 import re
 
 
+class AOCError(Exception):
+    """Base Error"""
+
+
+class AOCKeyError(AOCError):
+    """Error for bad key values"""
+
+
 def read_input(file: Path) -> list[str]:
     """Read input.txt and return a list of stripped strings"""
     with open(file, "r") as fh:

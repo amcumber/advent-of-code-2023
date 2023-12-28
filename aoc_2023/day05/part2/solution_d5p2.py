@@ -1,15 +1,16 @@
 """solution for part 2 day 5"""
 import sys
 from pathlib import Path
-from typing import Any, Generic, Iterable
+from typing import Any, Iterable
 
-sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
+if __name__ == "__main__":
+    sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
-from aoc_2023.core import read_input
+from aoc_2023.core import read_input, AOCKeyError
 from aoc_2023.day05.day5 import (
     get_maps,
     get_seeds,
-    populate_almanac_path,
+    populate_almanac_links,
     walk_almanac,
     SparseMap,
 )
@@ -31,7 +32,7 @@ Value = Any
 REV_ALMANAC = {v: k for k, v in ALMANAC.items()}
 
 
-def reverse_maps(maps: dict[str, SparseMap]) -> dict[str, SparseMap]:
+def get_reversed_maps(maps: dict[str, SparseMap]) -> dict[str, SparseMap]:
     """Reverse maps dictionary"""
     new_maps = {}
     for key, map_ in maps.items():
@@ -41,27 +42,42 @@ def reverse_maps(maps: dict[str, SparseMap]) -> dict[str, SparseMap]:
     return new_maps
 
 
+def _get_x2y(
+    x: int,
+    x_name: str,
+    y_name: str,
+    maps: dict[str, SparseMap],
+    almanac: dict[str, str],
+):
+    """Walk a location to seed using a reversed_maps dict"""
+    if not (y_name in almanac or y_name in almanac.values()):
+        raise AOCKeyError("Bad y_name refer to almanac for valid values")
+    values, destinations = walk_almanac(almanac, x, maps, start_name=x_name)
+    val2dest = {d: val for val, d in zip(values, destinations)}
+    return val2dest[y_name]
+
+
 def get_seed2loc(seed: int, maps: dict[str, SparseMap]):
     """Get a location based on seed num"""
-    path, _ = walk_almanac(ALMANAC, seed, maps, start_name=START_NAME)
-    return path[-1]
+    return _get_x2y(seed, START_NAME, REV_NAME, maps, ALMANAC)
 
 
 def get_loc2seed(loc: int, reversed_maps: dict[str, SparseMap]):
     """Walk a location to seed using a reversed_maps dict"""
-    path, _ = walk_almanac(REV_ALMANAC, loc, reversed_maps, start_name=REV_NAME)
-    return path[-1]
+    return _get_x2y(loc, REV_NAME, START_NAME, reversed_maps, REV_ALMANAC)
 
 
-def get_path_names(is_reversed=False) -> list[str]:
+def get_link_names(is_reversed=False) -> list[str]:
     """Walk a location to seed using a reversed_maps dict"""
     if is_reversed:
-        return populate_almanac_path(REV_ALMANAC, REV_NAME)
+        return populate_almanac_links(REV_ALMANAC, REV_NAME)
 
-    return populate_almanac_path(ALMANAC, START_NAME)
+    return populate_almanac_links(ALMANAC, START_NAME)
 
 
-def map_node_edges(maps: dict[str, SparseMap]) -> dict[str, list[tuple[int, int]]]:
+def map_node_edges(
+    reverse_maps: dict[str, SparseMap]
+) -> dict[str, list[tuple[int, int]]]:
     """For each end of the reversed_map"""
 
 
@@ -77,6 +93,8 @@ def get_paths(
 
 
 def find_min_loc(paths: dict[int, list[int]]):
+    """find minimum location"""
+    return
     loc2seed = {}
     for seed, path in paths.items():
         loc2seed[path[-1]] = seed
