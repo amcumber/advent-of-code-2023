@@ -1,9 +1,16 @@
 import math
 import re
 from dataclasses import dataclass
-from typing import Iterable
+from functools import reduce
+from typing import Callable, Iterable
 
-from aoc_2023.core import AOCAttributeError, AOCValueError, parse_line, parse_str_arr
+from aoc_2023.core import (
+    AOCAttributeError,
+    AOCValueError,
+    concat_str_int,
+    parse_line,
+    parse_str_arr,
+)
 
 
 @dataclass
@@ -112,7 +119,20 @@ class BoatRace:
         return l_root, r_root
 
 
-def parse_times(input_data: Iterable[str]) -> list[int]:
+def get_n_taus_above_record(record_tau: tuple[float, float], opt_tau: float) -> int:
+    low, high = record_tau
+    # correction for equal values
+    low += 1e-6
+    high -= 1e-6
+    return len(range(math.ceil(low), math.ceil(high)))
+
+
+def calc_result(result: list[int]):
+    return reduce(lambda x, y: x * y, result)
+
+
+def parse_times_p1(input_data: Iterable[str]) -> list[int]:
+    """Part 1 time parser"""
     pattern = "Time:"
 
     times = []
@@ -122,7 +142,8 @@ def parse_times(input_data: Iterable[str]) -> list[int]:
     return times
 
 
-def parse_dists(input_data: Iterable[str]) -> list[int]:
+def parse_dists_p1(input_data: Iterable[str]) -> list[int]:
+    """Part 1 distance parser"""
     pattern = "Distance:"
 
     distances = []
@@ -132,7 +153,33 @@ def parse_dists(input_data: Iterable[str]) -> list[int]:
     return distances
 
 
-def get_races(input_data: Iterable[str]) -> list[BoatRace]:
-    times = parse_times(input_data)
-    dists = parse_dists(input_data)
+def parse_times_p2(input_data: Iterable[str]) -> list[int]:
+    """Part 2 time parser"""
+    pattern = "Time:"
+
+    times = []
+    for line in input_data:
+        str_arr = parse_line(line, pattern)
+        times.extend(concat_str_int(str_arr))
+    return times
+
+
+def parse_dists_p2(input_data: Iterable[str]) -> list[int]:
+    """Part 2 distance parser"""
+    pattern = "Distance:"
+
+    distances = []
+    for line in input_data:
+        str_arr = parse_line(line, pattern)
+        distances.extend(concat_str_int(str_arr))
+    return distances
+
+
+def get_races(
+    input_data: Iterable[str],
+    time_parser,
+    dist_parser,
+) -> list[BoatRace]:
+    times = time_parser(input_data)
+    dists = dist_parser(input_data)
     return [BoatRace(t, d) for t, d in zip(times, dists)]

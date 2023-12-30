@@ -9,13 +9,13 @@ from aoc_2023.day06.day6 import (
     calc_result,
     get_n_taus_above_record,
     get_races,
-    parse_dists_p1,
-    parse_times_p1,
+    parse_dists_p2,
+    parse_times_p2,
 )
 
 
 def main(input_data: list[str]):
-    races = get_races(input_data, parse_times_p1, parse_dists_p1)
+    races = get_races(input_data, parse_times_p2, parse_dists_p2)
     n_solutions = []
     for race in races:
         record_taus = race.get_record_taus()
