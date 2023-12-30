@@ -14,6 +14,10 @@ class AOCAttributeError(AOCError):
     """Error for bad attributes"""
 
 
+class AOCValueError(AOCError):
+    """Error for bad values input or output"""
+
+
 def read_input(file: Path) -> list[str]:
     """Read input.txt and return a list of stripped strings"""
     with open(file, "r") as fh:
