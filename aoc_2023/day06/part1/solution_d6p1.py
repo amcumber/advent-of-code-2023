@@ -1,3 +1,4 @@
+import math
 import sys
 from functools import reduce
 from pathlib import Path
@@ -6,23 +7,24 @@ if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
-from aoc_2023.day06.day6 import get_optimal_tau, get_races, get_record_tau
+from aoc_2023.day06.day6 import get_races
 
 
-def get_n_taus_above_record(opt_tau: float, record_tau: int) -> int:
-    above_record = range(p1 := record_tau + 1, p1 + (c_t := round(opt_tau)))
-    if c_t == (opt_tau * 2 // 2):
-        return len(above_record)
-    return len(above_record) + 1
+def get_n_taus_above_record(record_tau: tuple[float, float], opt_tau: float) -> int:
+    low, high = record_tau
+    # correction for equal values
+    low += 1e-6
+    high -= 1e-6
+    return len(range(math.ceil(low), math.ceil(high)))
 
 
 def main(input_data: list[str]):
     races = get_races(input_data)
     n_solutions = []
     for race in races:
-        record_tau = get_record_tau(race)
-        opt_tau = get_optimal_tau(race)
-        n_solutions.append(get_n_taus_above_record(opt_tau, record_tau))
+        record_taus = race.get_record_taus()
+        opt_tau = race.get_optimal_tau()
+        n_solutions.append(get_n_taus_above_record(record_taus, opt_tau))
     return n_solutions
 
 
