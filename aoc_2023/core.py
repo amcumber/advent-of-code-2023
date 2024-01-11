@@ -30,7 +30,7 @@ def parse_line(line: str, divider=":", idx=1) -> str:
     divided = line.split(divider)
     if len(divided) == 1:
         return ""
-    return divided[idx]
+    return divided[idx].strip()
 
 
 def parse_str_arr(array: str, divider: str = r"\s+") -> list[int]:
