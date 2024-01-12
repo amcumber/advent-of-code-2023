@@ -1,5 +1,3 @@
-"""Solution to day 7 part 1
-"""
 import sys
 from pathlib import Path
 
@@ -9,26 +7,25 @@ if __name__ == "__main__":
 from aoc_2023.core import parse_line, read_input
 from aoc_2023.day07.day7 import CamelHand, calc_result, rank_hands, sort_wagers
 
-CARD_RANK_7P1 = {
-    card: rank for rank, card in enumerate(reversed("AKQJT98765432"))
+CARD_RANK_7P2 = {
+    card: rank for rank, card in enumerate(reversed("AKQT98765432J"))
 }
 
 
-def parse_camel_line_7p1(
+def parse_camel_line_7p2(
     line: str, card_rank: dict[str, int]
 ) -> tuple[CamelHand, int]:
     """Parse camel cards hand into the hand and wager"""
     hand = parse_line(line, divider=" ", idx=0)
     wager = parse_line(line, divider=" ", idx=1)
-
-    return CamelHand(hand, card_rank=card_rank), int(wager)
+    return CamelHand(hand, card_rank=card_rank, wild_card="J"), int(wager)
 
 
 def main(input_data: list[str]) -> list[int]:
     """Main for day7 part 1 - camel cards"""
     hands, wagers = list(
         zip(
-            *[parse_camel_line_7p1(line, CARD_RANK_7P1) for line in input_data]
+            *[parse_camel_line_7p2(line, CARD_RANK_7P2) for line in input_data]
         )
     )
     ranks = rank_hands(hands)

@@ -104,7 +104,7 @@ def expected_formatted_seeds():
 def test_parse_seeds(expected_seeds, expected_formatted_seeds):
     """Seed parsing is expected to generate a range of seed values"""
     result = parse_seeds(expected_seeds)
-    for r, e in zip(result, expected_formatted_seeds):
+    for r, e in zip(result.seed_ranges, expected_formatted_seeds):
         assert r == e
 
 
@@ -146,4 +146,6 @@ def test_main(example_input, expected_result):
     """example solution is seed 82 -> location 46"""
     result = main(example_input)
     assert result["seed"] == expected_result["seed"], "Failed at seed"
-    assert result["location"] == expected_result["location"], "Failed at location"
+    assert (
+        result["location"] == expected_result["location"]
+    ), "Failed at location"
