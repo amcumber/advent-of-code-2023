@@ -17,7 +17,7 @@ def main(input_data: list[str]) -> list[int]:
     for seq in seqs:
         model = Sequence(seq)
         model.fit()
-        results.append(model.predict())
+        results.append(model.predict_backward())
     return results
 
 

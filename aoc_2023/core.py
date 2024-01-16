@@ -117,7 +117,7 @@ def write_result(file: Path, payload: Any):
 def get_input_output_files(puzzle_file: Path | str) -> tuple[Path, Path]:
     """Return location of input file and result file to be used in puzzle"""
     old_input = Path(puzzle_file).parent.parent / "input.txt"
-    old_result = old_input.parent / "result.txt"
+    old_result = Path(puzzle_file).parent / "result.txt"
 
     return (
         get_new_root(x, OLD_BASE, USR_ROOT) for x in (old_input, old_result)
