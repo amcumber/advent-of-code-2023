@@ -1,5 +1,10 @@
 import re
 from pathlib import Path
+from typing import Any
+
+ROOT = (Path(__file__).parent / "..").resolve()
+OLD_BASE = ROOT / "aoc_2023"
+USR_ROOT = ROOT / "usr"
 
 
 class AOCError(Exception):
@@ -72,6 +77,7 @@ def concat_str_int(array: str, divider: str = r"\s+") -> list[int]:
 
 
 def minus_root(root: Path, path: Path) -> Path:
+    """Remove a root path from a path to make a relative path"""
     if not all([part in path.parts for part in root.parts]):
         raise AOCValueError("Not part of path")
 
@@ -87,6 +93,10 @@ def minus_root(root: Path, path: Path) -> Path:
 
 
 def get_new_root(path: Path, old_root: Path, new_root: Path) -> Path:
+    """Replace one root path with a new root path for a given path"""
+    old_root = old_root.resolve()
+    new_root = new_root.resolve()
+    path = path.resolve()
     rel_file = minus_root(old_root, path)
     return new_root / rel_file
 
@@ -95,3 +105,20 @@ def replace_file(file: Path, old_root: Path, new_root: Path) -> Path:
     new_file = get_new_root(file, old_root, new_root)
     new_file.parent.mkdir(exist_ok=True, parents=True)
     file.rename(new_file)
+
+
+def write_result(file: Path, payload: Any):
+    """write result to file, payload must have a __str__ method"""
+    file.parent.mkdir(parents=True, exist_ok=True)
+    with open(file, "w") as fh:
+        fh.write(str(payload))
+
+
+def get_input_output_files(puzzle_file: Path | str) -> tuple[Path, Path]:
+    """Return location of input file and result file to be used in puzzle"""
+    old_input = Path(puzzle_file).parent.parent / "input.txt"
+    old_result = old_input.parent / "result.txt"
+
+    return (
+        get_new_root(x, OLD_BASE, USR_ROOT) for x in (old_input, old_result)
+    )
