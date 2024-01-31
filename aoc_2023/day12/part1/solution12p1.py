@@ -6,19 +6,14 @@ if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import get_input_output_files, read_input, write_result
-from aoc_2023.day11.day11 import (
-    find_targets,
-    get_dists,
-    calc_result,
-    TARGET_ID,
-    expand_data,
-)
 
 
 def main(input_data: list[str]) -> list[int]:
-    data = expand_data(input_data, target_id=TARGET_ID)
-    targets = find_targets(data)
-    return get_dists(targets)
+    return None
+
+
+def calc_result(val: list[int]) -> int:
+    return sum(val)
 
 
 if __name__ == "__main__":

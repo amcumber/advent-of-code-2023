@@ -6,13 +6,15 @@ from pathlib import Path
 if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
-from aoc_2023.day11.part1.solution11p1 import (
-    main,
-    calc_result,
-    get_dists,
+from aoc_2023.day11.part1.solution11p1 import main
+from aoc_2023.day11.day11 import (
     transpose,
     expand_data,
+    get_dists,
+    calc_result,
     find_targets,
+    DEFAULT_INFILL,
+    DEFAULT_EMPTY,
 )
 
 
@@ -174,6 +176,7 @@ def test_get_dists(data, expected):
 def test_expand_data(data, expected):
     result = expand_data(data)
     for r, e in zip(result, expected):
+        r = r.replace(DEFAULT_INFILL, DEFAULT_EMPTY)
         assert r == e
 
 
