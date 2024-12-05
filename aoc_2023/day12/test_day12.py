@@ -1,15 +1,8 @@
-import pytest
-
 import sys
 from pathlib import Path
 
-if __name__ == "__main__":
-    sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
-
-from aoc_2023.day12.part1.solution12p1 import (
-    main,
-    calc_result,
-)
+import pytest
+from aoc_2023.day12.soln import calc_result, main
 
 
 def example_input1():

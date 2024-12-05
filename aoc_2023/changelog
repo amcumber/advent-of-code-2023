@@ -1,0 +1,3 @@
+CHANGELOG
+
+2024-12-05: Architecture change to align with click and pyroject.toml API entry points

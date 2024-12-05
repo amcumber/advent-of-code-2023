@@ -33,7 +33,23 @@ Issues = "https://github.com/Aaron/advent-of-code-2023/issues"
 Source = "https://github.com/Aaron/advent-of-code-2023"
 
 [project.scripts]
+# NOTE: a major architecture change happened upon solving day11 part 2
 "23_day11" = "aoc_2023.day11.day11:cli"
+"23_day12" = "aoc_2023.day12.soln:cli"
+"23_day13" = "aoc_2023.day13.soln:cli"
+"23_day13" = "aoc_2023.day13.soln:cli"
+"23_day14" = "aoc_2023.day14.soln:cli"
+"23_day15" = "aoc_2023.day15.soln:cli"
+"23_day16" = "aoc_2023.day16.soln:cli"
+"23_day17" = "aoc_2023.day17.soln:cli"
+"23_day18" = "aoc_2023.day18.soln:cli"
+"23_day19" = "aoc_2023.day19.soln:cli"
+"23_day20" = "aoc_2023.day20.soln:cli"
+"23_day21" = "aoc_2023.day21.soln:cli"
+"23_day22" = "aoc_2023.day22.soln:cli"
+"23_day23" = "aoc_2023.day23.soln:cli"
+"23_day24" = "aoc_2023.day24.soln:cli"
+"23_day25" = "aoc_2023.day25.soln:cli"
 
 [tool.hatch.version]
 # path = "src/aoc_2023/__about__.py"

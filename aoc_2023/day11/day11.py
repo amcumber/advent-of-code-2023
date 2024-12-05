@@ -92,19 +92,19 @@ def main_part2(data, dist_val):
     return sum(result)
 
 
-@click.group
+@click.group(help="AOC 2023 day 11 solution")
 def cli():
-    """Command Line Interface for day05"""
+    """Command Line Interface for day11"""
 
 
-@cli.command()
+@cli.command(help="part1 solution")
 @click.option("--file", default=get_input_file(__file__))
 def part1(file):
     data = read_file(Path(file))
     print(main_part1(data))
 
 
-@cli.command()
+@cli.command(help="part2 solution")
 @click.option("--file", default=get_input_file(__file__))
 def part2(file):
     data = read_file(Path(file))
