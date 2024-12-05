@@ -1,4 +1,5 @@
 """Solution to part 1 day 5"""
+
 if __name__ == "__main__":
     import sys
     from pathlib import Path

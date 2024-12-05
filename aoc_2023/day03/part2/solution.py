@@ -61,7 +61,9 @@ def match_numbers_to_symbols(
     return matches
 
 
-def compare_lines(s_line: list[re.Match], n_lines: list[list[re.Match]]) -> list[int]:
+def compare_lines(
+    s_line: list[re.Match], n_lines: list[list[re.Match]]
+) -> list[int]:
     matches = []
     for sym in s_line:
         adj_sym = []

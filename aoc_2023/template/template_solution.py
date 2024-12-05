@@ -1,4 +1,5 @@
 """Solution to day x part y"""
+
 import sys
 from pathlib import Path
 

@@ -1,4 +1,5 @@
 """Solution to day x part y"""
+
 import sys
 from dataclasses import dataclass, field
 from enum import Enum

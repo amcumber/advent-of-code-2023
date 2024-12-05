@@ -1,4 +1,5 @@
 """Solution to day 9 part 1"""
+
 import math
 import sys
 from dataclasses import dataclass, field

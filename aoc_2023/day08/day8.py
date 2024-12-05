@@ -1,4 +1,5 @@
 """tools for day 8"""
+
 DIR2NUM = {id_: idx for idx, id_ in enumerate("LR")}
 
 

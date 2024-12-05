@@ -1,4 +1,5 @@
 """solution for part 2 day 5"""
+
 import sys
 from collections import namedtuple
 from dataclasses import dataclass
@@ -129,7 +130,8 @@ def _get_nodes2seeds(
 ) -> list[int]:
     """Take a set of nodes given a node name and map them to seeds"""
     return [
-        _get_x2y(node, name, START_NAME, reversed_maps, REV_ALMANAC) for node in nodes
+        _get_x2y(node, name, START_NAME, reversed_maps, REV_ALMANAC)
+        for node in nodes
     ]
 
 
@@ -208,4 +210,6 @@ if __name__ == "__main__":
     output_file = Path(__file__).parent / "result.txt"
     with open(output_file, "w") as fh:
         fh.write(str(result["location"]))
-    print(f"The lowest seed with loc: {result['location']} is seed: {result['seed']}")
+    print(
+        f"The lowest seed with loc: {result['location']} is seed: {result['seed']}"
+    )

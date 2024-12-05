@@ -32,7 +32,9 @@ def example_match3():
     return BoatRace(t=30, d=200)
 
 
-def test_get_matches(example_input, example_match1, example_match2, example_match3):
+def test_get_matches(
+    example_input, example_match1, example_match2, example_match3
+):
     expected = [example_match1, example_match2, example_match3]
     result = get_races(example_input, parse_times_p1, parse_dists_p1)
     for r, e in zip(result, expected):

@@ -56,7 +56,9 @@ class SparseMap:
 
     def min(self) -> list[DestSourceTuple]:
         """Return a named tuple with with minimum sources and destinations"""
-        return [DestSourceTuple(dest, source) for dest, source, _ in self.map_info]
+        return [
+            DestSourceTuple(dest, source) for dest, source, _ in self.map_info
+        ]
 
     def max(self) -> list[DestSourceTuple]:
         """Return a named tuple with with maximum sources and destinations"""

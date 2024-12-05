@@ -1,4 +1,5 @@
 """Prototype for part 2 day 5"""
+
 from typing import Iterable
 
 import matplotlib.pyplot as plt

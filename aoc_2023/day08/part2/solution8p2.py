@@ -1,4 +1,5 @@
 """solution to day 8 part 2"""
+
 import sys
 from math import lcm
 from pathlib import Path

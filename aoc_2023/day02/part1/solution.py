@@ -56,7 +56,9 @@ def evaluate_game(game: Game, rules: dict[str, int]) -> bool:
 
 
 def evaluate_games(games: list[Game], rules: dict[str, int]) -> list[int]:
-    return [list(game.keys()).pop() for game in games if evaluate_game(game, rules)]
+    return [
+        list(game.keys()).pop() for game in games if evaluate_game(game, rules)
+    ]
 
 
 def main():

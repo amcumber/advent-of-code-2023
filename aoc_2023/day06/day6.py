@@ -119,7 +119,9 @@ class BoatRace:
         return l_root, r_root
 
 
-def get_n_taus_above_record(record_tau: tuple[float, float], opt_tau: float) -> int:
+def get_n_taus_above_record(
+    record_tau: tuple[float, float], opt_tau: float
+) -> int:
     low, high = record_tau
     # correction for equal values
     low += 1e-6

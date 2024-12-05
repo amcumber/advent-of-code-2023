@@ -1,5 +1,6 @@
 """Solution to day 7 part 1
 """
+
 import sys
 from pathlib import Path
 

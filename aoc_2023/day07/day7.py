@@ -7,6 +7,7 @@ Note2:
     using dataclasses: using @dataclass(ordered=True) and sort_index:
         https://realpython.com/python-data-classes/
 """
+
 import sys
 from dataclasses import dataclass, field
 from enum import Enum, auto
@@ -41,11 +42,9 @@ class HandType(Enum):
 class CamelHandType(Protocol):
     hand: str
 
-    def get_hand_type(self):
-        ...
+    def get_hand_type(self): ...
 
-    def sort(self):
-        ...
+    def sort(self): ...
 
 
 @dataclass

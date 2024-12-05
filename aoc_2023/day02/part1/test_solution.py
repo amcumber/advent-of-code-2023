@@ -11,14 +11,14 @@ from aoc_2023.day02.part1.solution import (
 
 @pytest.fixture
 def example_line():
-    return (
-        """Game 1: 7 green, 14 red, 5 blue; 8 red, 4 green; 6 green, 18 red, 9 blue"""
-    )
+    return """Game 1: 7 green, 14 red, 5 blue; 8 red, 4 green; 6 green, 18 red, 9 blue"""
 
 
 @pytest.fixture
 def example_set():
-    return """7 green, 14 red, 5 blue; 8 red, 4 green; 6 green, 18 red, 9 blue"""
+    return (
+        """7 green, 14 red, 5 blue; 8 red, 4 green; 6 green, 18 red, 9 blue"""
+    )
 
 
 @pytest.fixture
