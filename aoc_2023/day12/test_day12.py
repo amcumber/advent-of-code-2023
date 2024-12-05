@@ -1,5 +1,5 @@
 import pytest
-from aoc_2023.day12.soln import calc_result, main
+from aoc_2023.day12.soln import calc_result, main_part1
 
 
 def example_input1():
@@ -48,20 +48,7 @@ def expected_result2():
     ],
 )
 def test_main(input_data, expected):
-    result = main(input_data)
+    result = main_part1(input_data)
 
     assert result == expected
 
-
-@pytest.mark.parametrize(
-    ["input_data", "expected"],
-    [
-        (example_input1(), expected_result1()),
-        (example_input2(), expected_result2()),
-    ],
-)
-def test_calc_results(input_data, expected):
-    value = main(input_data)
-    results = calc_result(value)
-
-    assert results == expected
