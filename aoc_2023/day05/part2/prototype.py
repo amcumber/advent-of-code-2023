@@ -11,8 +11,7 @@ if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.day05.day5 import SparseMap, get_maps, get_seeds
-
-from aoc_2023.day05.part2.solution_d5p2 import parse_seeds, get_paths
+from aoc_2023.day05.part2.solution_d5p2 import get_paths, parse_seeds
 
 
 def input_tbr():

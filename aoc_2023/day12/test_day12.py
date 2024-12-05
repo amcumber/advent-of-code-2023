@@ -1,6 +1,3 @@
-import sys
-from pathlib import Path
-
 import pytest
 from aoc_2023.day12.soln import calc_result, main
 

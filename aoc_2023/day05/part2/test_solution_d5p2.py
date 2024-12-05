@@ -1,5 +1,4 @@
 import pytest
-
 from aoc_2023.day05.day5 import get_maps
 from aoc_2023.day05.part2.solution_d5p2 import (
     ALMANAC,

@@ -123,6 +123,7 @@ def get_input_output_files(puzzle_file: Path | str) -> tuple[Path, Path]:
         get_new_root(x, OLD_BASE, USR_ROOT) for x in (old_input, old_result)
     )
 
+
 # new code - consider removing
 ROOT = Path(__file__).parent / ".."
 

@@ -1,7 +1,6 @@
 from functools import reduce
 
 import pytest
-
 from aoc_2023.day06.day6 import BoatRace, get_n_taus_above_record
 from aoc_2023.day06.part1.solution_d6p1 import main
 

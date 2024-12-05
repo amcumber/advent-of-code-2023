@@ -1,5 +1,4 @@
 import pytest
-
 from aoc_2023.day04.part2.solution import count_cards, main, score_matches
 
 

@@ -1,5 +1,4 @@
 import pytest
-
 from aoc_2023.day05.part1.solution_d5p1 import main
 
 

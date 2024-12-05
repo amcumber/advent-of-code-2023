@@ -1,5 +1,4 @@
 import pytest
-
 from aoc_2023.day02.part1.solution import (
     evaluate_game,
     get_game_maxes,

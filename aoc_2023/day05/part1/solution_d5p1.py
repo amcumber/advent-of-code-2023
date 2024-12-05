@@ -7,7 +7,7 @@ if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
 from aoc_2023.core import read_input
-from aoc_2023.day05.day5 import get_maps, get_seeds, walk_almanac, SparseMap
+from aoc_2023.day05.day5 import SparseMap, get_maps, get_seeds, walk_almanac
 
 ALMANAC = {
     "seed": "soil",

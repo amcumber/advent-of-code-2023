@@ -1,5 +1,4 @@
 import pytest
-
 from aoc_2023.day04.part1.solution import main, score_matches
 
 

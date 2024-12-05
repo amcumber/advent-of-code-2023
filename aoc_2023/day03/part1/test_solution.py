@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 import pytest
-
 from aoc_2023.day03.part1.solution import (
     compare_line,
     main,
