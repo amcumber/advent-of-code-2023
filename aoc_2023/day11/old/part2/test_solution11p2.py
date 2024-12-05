@@ -1,18 +1,18 @@
-import pytest
-
 import sys
 from pathlib import Path
+
+import pytest
 
 if __name__ == "__main__":
     sys.path.append(str(Path(__file__).parent.resolve() / "../../.."))
 
-from aoc_2023.day11.part2.solution11p2 import main, INFILL
-from aoc_2023.day11.day11 import (
+from aoc_2023.day11.old.day11 import (
     calc_result,
     expand_data,
-    get_dists,
     find_targets,
+    get_dists,
 )
+from aoc_2023.day11.old.part2.solution11p2 import INFILL, main
 
 
 def example_input():

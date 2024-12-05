@@ -122,3 +122,20 @@ def get_input_output_files(puzzle_file: Path | str) -> tuple[Path, Path]:
     return (
         get_new_root(x, OLD_BASE, USR_ROOT) for x in (old_input, old_result)
     )
+
+# new code - consider removing
+ROOT = Path(__file__).parent / ".."
+
+
+def read_file(file: Path | str, as_str: bool = False):
+    with open(file, "r") as fh:
+        fun = fh.readlines
+        if as_str:
+            fun = fh.read
+        payload = fun()
+    return payload
+
+
+def get_input_file(soln_file: str):
+    day = Path(soln_file).parent.name
+    return ROOT / "usr" / day / "input.txt"

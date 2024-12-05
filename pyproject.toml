@@ -1,0 +1,76 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[project]
+authors = [
+  {name = "Aaron", email = "20608451+amcumber@users.noreply.github.com"},
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "click",
+  "pytest",
+]
+description = "amcumber's solutions to advent of code 2023"
+dynamic = ["version"]
+keywords = []
+license = "MIT"
+name = "advent-of-code-2023"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.urls]
+Documentation = "https://github.com/Aaron/advent-of-code-2023#readme"
+Issues = "https://github.com/Aaron/advent-of-code-2023/issues"
+Source = "https://github.com/Aaron/advent-of-code-2023"
+
+[project.scripts]
+"23_day11" = "aoc_2023.day11.day11:cli"
+
+[tool.hatch.version]
+# path = "src/aoc_2023/__about__.py"
+path = "aoc_2023/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.build.targets.wheel]
+# packages = ["src/aoc_2023"]
+packages = ["aoc_2023"]
+
+[tool.hatch.envs.types.scripts]
+# check = "mypy --install-types --non-interactive {args:src/aoc_2023 tests}"
+check = "mypy --install-types --non-interactive {args:aoc_2023 tests}"
+
+[tool.coverage.run]
+branch = true
+# omit = [
+#   "src/aoc_2023/__about__.py",
+# ]
+omit = [
+  "aoc_2023/__about__.py",
+]
+parallel = true
+source_pkgs = ["aoc_2023", "tests"]
+
+[tool.coverage.paths]
+# aoc_2023 = ["src/aoc_2023", "*/advent-of-code-2023/src/aoc_2023"]
+# tests = ["tests", "*/advent-of-code-2023/tests"]
+aoc_2023 = ["aoc_2023"]
+tests = ["tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
