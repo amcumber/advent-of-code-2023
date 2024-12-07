@@ -1,8 +1,9 @@
 import pytest
-from aoc_2023.day12.soln import calc_result, main_part1
+from aoc_2023.day12 import soln
 
 
-def example_input1():
+@pytest.fixture
+def input_():
     return [
         "???.### 1,1,3",
         ".??..??...?##. 1,1,3",
@@ -13,42 +14,42 @@ def example_input1():
     ]
 
 
-def example_input2():
-    return [
-        "#.#.### 1,1,3",
-        ".#...#....###. 1,1,3",
-        ".#.###.#.###### 1,3,1,6",
-        "####.#...#... 4,1,1",
-        "#....######..#####. 1,6,5",
-        ".###.##....# 3,2,1",
-    ]
-
-
-def expected_arrangements1():
-    return [1, 4, 1, 1, 4, 10]
-
-
-def expected_arrangements2():
-    return [1, 1, 1, 1, 1, 1]
-
-
-def expected_result1():
-    return 21
-
-
-def expected_result2():
-    return 6
+@pytest.fixture
+def ex_input1(input_):
+    expected = sum([1, 4, 1, 1, 4, 10])
+    return input_, expected
 
 
 @pytest.mark.parametrize(
-    ["input_data", "expected"],
+    ["line", "expected"],
     [
-        (example_input1(), expected_arrangements1()),
-        (example_input2(), expected_arrangements2()),
+        (".#.#.##..###", [1, 1, 2, 3]),
+        ("#.#.##..###.", [1, 1, 2, 3]),
+        (".##..##..###..", [2, 2, 3]),
     ],
 )
-def test_main(input_data, expected):
-    result = main_part1(input_data)
+def test_make_test_list(line, expected):
+    result = soln.make_test_list(line)
+    assert result == expected
+
+
+@pytest.mark.parametrize(
+    ["data", "expected"],
+    [
+        (["???.### 1,1,3"], 1),
+        ([".??..??...?##. 1,1,3"], 4),
+        (["?#?#?#?#?#?#?#? 1,3,1,6"], 1),
+        (["????.#...#... 4,1,1"], 1),
+    ],
+)
+def test_main_short(data, expected):
+    result = soln.main_part1(data)
 
     assert result == expected
 
+
+def test_main(ex_input1):
+    data, expected = ex_input1
+    result = soln.main_part1(data)
+
+    assert result == expected
